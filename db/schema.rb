@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2018_07_04_003450) do
     t.integer "organization_id"
     t.integer "storage_location_id"
     t.text "comment"
-    t.datetime "created_at", null: false
+    t.date "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_adjustments_on_organization_id"
     t.index ["storage_location_id"], name: "index_adjustments_on_storage_location_id"
