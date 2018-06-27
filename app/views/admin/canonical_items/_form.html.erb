@@ -1,14 +1,19 @@
-    <%= form.input :name, label: "Name", wrapper: :vertical_input_group do %>
+<% submit_text ||= form.submit_text %>
+
+<div class="box-body">
+  <%= simple_form_for form, html: { class: 'form-horizontal' },  url: admin_canonical_item_path do |f| %>
+    <%= f.input :name, label: "Name", wrapper: :vertical_input_group do %>
       <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-      <%= form.input_field :name, class: "form-control" %>
+      <%= f.input_field :name, class: "form-control" %>
     <% end %>
 
-    <%= form.input :category, label: "Category", wrapper: :vertical_input_group do %>
+    <%= f.input :category, label: "Category", wrapper: :vertical_input_group do %>
       <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-      <%= form.input_field :category, class: "form-control" %>
+      <%= f.input_field :category, class: "form-control" %>
     <% end %>
 
-    <%= form.input :partner_key, label: "Key (for Partner Requests)", wrapper: :vertical_input_group do %>
-      <span class="input-group-addon"><i class="fa fa-key"></i></span>
-      <%= form.input_field :partner_key, class: "form-control" %>
-    <% end %>
+
+    <%= f.button :submit, submit_text, class:"btn btn-info"%>
+
+  <% end %>
+</div>
