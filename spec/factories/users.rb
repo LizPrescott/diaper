@@ -46,5 +46,10 @@ FactoryBot.define do
       name { "Administrative User" }
       super_admin { true }
     end
+
+    factory :superadmin do
+      name "Administrative User"
+      superadmin true
+    end
   end
 end
