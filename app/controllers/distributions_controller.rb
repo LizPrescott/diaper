@@ -87,6 +87,10 @@ class DistributionsController < ApplicationController
     render :show
   end
 
+  def pick_ups
+    @pick_ups = current_organization.distributions
+  end
+
   def insufficient_amount!
     respond_to do |format|
       format.html { render template: "errors/insufficient", layout: "layouts/application", status: :ok }
