@@ -27,6 +27,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api, defaults: { format: "json" } do
+    namespace :v1 do
+      resources :partner_requests, only: :create
+    end
+  end
+
   scope path: ":organization_id" do
     resources :users
 
