@@ -269,9 +269,11 @@ class StorageLocation < ApplicationRecord
   def update_distribution!(distribution, new_distribution_params)
     ActiveRecord::Base.transaction do
       reclaim! distribution
-      distribution.line_items.destroy_all
+      distribution.line_items.each do |line_item|
+        line_item.destroy!
+      end
       distribution.update! new_distribution_params
-      distribute! distribution
+      distribute! distribution #BUG the error distribute! raises is not triggering a transaction rollback
     end
   end
 
