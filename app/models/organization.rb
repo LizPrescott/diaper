@@ -82,9 +82,9 @@ class Organization < ApplicationRecord
     street_changed? || city_changed? || state_changed? || zipcode_changed?
   end
 
-def address_changed?
-  street_changed? || city_changed? || state_changed? || zipcode_changed?
-end
+  def address_changed?
+    street_changed? || city_changed? || state_changed? || zipcode_changed?
+  end
 
   def address_inline
     address.split("\n").map(&:strip).join(", ")
