@@ -13,7 +13,8 @@
 #  updated_at      :datetime         not null
 #  address         :string
 #  business_name   :string
-#
+#  latitude        :float
+#  longitude       :float
 
 class DiaperDriveParticipant < ApplicationRecord
   require "csv"
@@ -24,6 +25,9 @@ class DiaperDriveParticipant < ApplicationRecord
   validates :name, presence: true
   validates :phone, presence: { message: "Must provide a phone or an e-mail" }, if: proc { |ddp| ddp.email.blank? }
   validates :email, presence: { message: "Must provide a phone or an e-mail" }, if: proc { |ddp| ddp.phone.blank? }
+
+  geocoded_by :address
+  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
 
   scope :for_csv_export, ->(organization) {
     where(organization: organization)
