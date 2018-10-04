@@ -21,6 +21,10 @@ class PartnersController < ApplicationController
     @partner = current_organization.partners.new
   end
 
+  def approve_partner
+    @partner = current_organization.partners.find(params[:id])
+  end
+
   def edit
     @partner = current_organization.partners.find(params[:id])
   end
