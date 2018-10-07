@@ -47,15 +47,18 @@
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
                   <li>
-                    <a href="#">
-                      <i class="fa fa-file-text text-aqua"></i> 10 Diaper Requests 
-                    </a>
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
+                      <li>
+                        <%= link_to(requests_path) do %>
+                          <i class="fa fa-file-text text-aqua"></i> <%= current_organization&.requests.active.size rescue "0" %> Diaper Requests
+                        <% end %>
+                      </li>
+                    </ul>
                   </li>
+                  <li class="footer"><%= link_to "View Requests", requests_path %></li>
                 </ul>
               </li>
-              <li class="footer"><a href="#">View Requests</a></li>
-            </ul>
-          </li>
           <% end %>
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
