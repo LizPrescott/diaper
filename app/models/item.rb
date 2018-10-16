@@ -41,7 +41,7 @@ class Item < ApplicationRecord
       .alphabetized
   }
 
-  default_scope { includes(:canonical_item).active }
+  default_scope { active }
 
   include DiaperPartnerClient
   after_create :update_diaper_partner
