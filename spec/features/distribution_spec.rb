@@ -132,44 +132,49 @@ RSpec.feature "Distributions", type: :feature do
     end
   end
 
-  scenario "User creates a distribution from a donation then edits it" do
-    @donation = create :donation, :with_items
+  context "When creating a distribution from a donation" do
+    let(:donation) { create :donation, :with_items }
+    before do
+      visit @url_prefix + "/donations/#{donation.id}"
+      click_on "Start a new Distribution"
+      within "#new_distribution" do
+        select @partner.name, from: "Partner"
+        click_button "Save"
+      end
+    end
 
-    visit @url_prefix + "/donations/#{@donation.id}"
-    click_on "Create distribution"
-    select @partner.name, from: "Partner"
-    click_button "Preview Distribution"
-    expect(page).to have_content "Distribution Manifest for"
-    click_button "Confirm Distribution"
-    expect(page.find(".alert-info")).to have_content "reated"
-    expect(Distribution.first.line_items.count).to eq 1
+    scenario "it completes successfully" do
+      expect(page).to have_content "Distributions"
+      expect(page.find(".alert-info")).to have_content "reated"
+      expect(Distribution.first.line_items.count).to eq 1
+    end
 
-    first(".btn", text: "Edit").click
-    first(".numeric").set 13
-    click_on "Update Distribution"
-    expect(page).to have_content "Distribution updated!"
-    expect(page).to have_content 13
-  end
+    context "when editing that distribution" do
+      before do
+        click_on "Edit", match: :first
+        @distribution = Distribution.last
+      end
 
-  scenario "User creates a distribution from a donation then tries to make the quantity too big" do
-    @donation = create :donation, :with_items
+      scenario "User creates a distribution from a donation then edits it" do
+        within "#edit_distribution_#{@distribution.to_param}" do
+          first(".numeric").set 13
+          click_on "Save"
+        end
+        expect(page).to have_content "Distribution updated!"
+        expect(page).to have_content 13
+      end
 
-    visit @url_prefix + "/donations/#{@donation.id}"
-    click_on "Create distribution"
-    select @partner.name, from: "Partner"
-    click_button "Preview Distribution"
-    expect(page).to have_content "Distribution Manifest for"
-    click_button "Confirm Distribution"
-    expect(page.find(".alert-info")).to have_content "reated"
-    expect(Distribution.first.line_items.count).to eq 1
-
-    first(".btn", text: "Edit").click
-    first(".numeric").set 999_999
-    click_on "Update Distribution"
-    expect(page).to have_no_content "Distribution updated!"
-    expect(page).to have_content "Distribution could not be updated!"
-    expect(page).to have_no_content 999_999
-    expect(Distribution.first.line_items.count).to eq 1
+      scenario "User creates a distribution from a donation then tries to make the quantity too big" do
+        within "#edit_distribution_#{@distribution.to_param}" do
+          first(".numeric").set 999_999
+          click_on "Save"
+        end
+        expect(page).to have_no_content "Distribution updated!"
+        expect(page).to have_content "Distribution could not be updated!"
+        expect(page).to have_no_content 999_999
+        expect(Distribution.first.line_items.count).to eq 1
+      end
+    end
   end
 
   context "via barcode entry" do
