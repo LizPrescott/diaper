@@ -19,6 +19,7 @@ RSpec.feature "Distributions", type: :feature do
     click_button "Save", match: :first
     expect(page).to have_content "Distributions"
     expect(page.find(".alert-info")).to have_content "reated"
+    expect(page).to have_selector :css, 'tr.highlight'
   end
 
   scenario "User doesn't fill storage_location" do
