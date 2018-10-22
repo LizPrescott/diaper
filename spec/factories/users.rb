@@ -48,8 +48,8 @@ FactoryBot.define do
     end
 
     factory :super_admin do
-      name "Administrative User"
-      super_admin true
+      name { "Administrative User" }
+      super_admin { true }
     end
   end
 end
