@@ -23,7 +23,7 @@ FactoryBot.define do
     contact_name "Don Draper"
     business_name "Awesome Business"
     sequence(:email) { |n| "don#{n}@scdp.com" }
-    phone "212-555-1111"
-    comment "A bit of a lush and philanderer."
+    phone { "212-555-1111" }
+    comment { "A bit of a lush and philanderer." }
   end
 end
