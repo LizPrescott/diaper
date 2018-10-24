@@ -21,7 +21,7 @@
 <div class="box">
   <div class="box-header with-border bg-gray">
     <div class="pull-right">
-      <%= modal_button_to("#importStorageLocationModal", { text: "Import Baseline Inventory", icon: "upload" }) if @storage_location.items.empty? %>
+      <%= modal_button_to("#csvImportModal", { text: "Import Baseline Inventory", icon: "upload" }) if @storage_location.items.empty? %>
     </div>
   </div>
   <div class="box-body">
