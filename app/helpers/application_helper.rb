@@ -58,4 +58,9 @@ module ApplicationHelper
 
     ""
   end
+
+# https://robots.thoughtbot.com/no-content-for-you
+  def no_content_for(symbol)
+    content_for(symbol) { '' }
+  end
 end
