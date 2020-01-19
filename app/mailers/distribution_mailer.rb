@@ -6,6 +6,8 @@ class DistributionMailer < ApplicationMailer
   #   en.distribution_mailer.partner_mailer.subject
   #
   def partner_mailer(current_organization, distribution, subject)
+    return if distribution.past?
+
     @partner = distribution.partner
     @distribution = distribution
     @default_email_text = current_organization.default_email_text
@@ -16,6 +18,8 @@ class DistributionMailer < ApplicationMailer
   end
 
   def reminder_email(distribution)
+    return if distribution.past?
+
     @partner = distribution.partner
     @distribution = distribution
     mail(to: @partner.email, from: @distribution.organization.email, subject: "#{@partner.name} Distribution Reminder")
